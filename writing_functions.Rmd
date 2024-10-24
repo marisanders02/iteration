@@ -1,0 +1,15 @@
+---
+title: "Writing Functions"
+author: "Mari Sanders"
+date: "2024-10-24"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(rvest)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
