@@ -7,6 +7,7 @@ output: github_document
 
 ```{r setup, include=FALSE}
 library(tidyverse)
+library(readxl)
 library(rvest)
 set.seed(1)
 knitr::opts_chunk$set(echo = TRUE)
@@ -53,5 +54,143 @@ Does this always work?
 ```{r, error = TRUE}
 z_scores(x = 3)
 z_scores(x = c("my", "name", "is"))
+```
+
+## New Function
+
+```{r}
+mean_and_sd <- function(x) {
+  
+  mean_x = mean(x)
+  sd_x = sd(x)
+  
+  output_df = 
+    tibble(
+      mean = mean_x,
+      sd = sd_x
+    )
+  
+  return(output_df)
+}
+
+mean_and_sd(x_vec)
+```
+
+## Check Stuff using a Simulation
+
+```{r}
+sim_df <- 
+  tibble(
+    x = rnorm(30, 10, 5)
+  )
+
+sim_df %>% 
+  summarize(
+    mean = mean(x), 
+    sd = sd(x)
+  )
+
+```
+
+## Simulation Function 
+
+- Checks sample mean and standard deviation. 
+
+```{r}
+sim_mean_sd = function(samp_size, true_mean, true_sd) {
+  sim_df <- 
+  tibble(
+    x = rnorm(samp_size, true_mean, true_sd)
+  )
+  out_df = 
+    sim_df %>% 
+    summarize(
+      mean = mean(x), 
+      sd = sd(x)
+    )
+  return(out_df)
+}
+
+sim_mean_sd(30, 16, 2)
+```
+
+## Revisit LoTR Words 
+
+```{r}
+fellowship_df <- 
+  read_excel("data/LoTR_Words.xlsx", range = "B3:D6") %>% 
+  mutate(movie = "fellowship") %>% 
+  janitor::clean_names()
+two_towers_df <- 
+  read_excel("data/LoTR_Words.xlsx", range = "F3:H6") %>% 
+  mutate(movie = "two_towers") %>% 
+  janitor::clean_names()
+return_king_df <- 
+  read_excel("data/LoTR_Words.xlsx", range = "J3:L6") %>% 
+  mutate(movie = "return_king") %>% 
+  janitor::clean_names()
+```
+
+Using a function instead
+
+```{r}
+importing_lotr <- function(range, movie) {
+  movie_df <-
+  read_excel("data/LoTR_Words.xlsx", range = range) %>% 
+    mutate(movie = movie) %>% 
+    janitor::clean_names() %>% 
+    pivot_longer(
+      female:male, 
+      names_to = "sex",
+      values_to = "words"
+    ) %>% 
+    select(movie, everything())
+  
+  return(movie_df)
+}
+lotr_df <- 
+  bind_rows(
+importing_lotr(range = "B3:D6", movie = "fellowship"),
+importing_lotr(range = "F3:H6", movie = "two_towers"),
+importing_lotr(range = "J3:L6", movie = "return_king"))
+```
+
+## NSDUH
+
+```{r}
+url = "http://samhda.s3-us-gov-west-1.amazonaws.com/s3fs-public/field-uploads/2k15StateFiles/NSDUHsaeShortTermCHG2015.htm"
+
+nsduh_html <- read_html(url)
+
+marj_df <-
+  nsduh_html %>% 
+  html_table() %>% 
+  nth(1) %>%  
+  slice(-1) %>% 
+  mutate(drug = "marj")
+
+cocaine_df <-
+  nsduh_html %>% 
+  html_table() %>% 
+  nth(4) %>%  
+  slice(-1) %>% 
+  mutate(drug = "cocaine")
+
+heroin_df <- 
+  nsduh_html %>% 
+  html_table() %>% 
+  nth(5) %>%  
+  slice(-1) %>% 
+  mutate(drug = "heroin")
+```
+
+Writing a function to get each table. 
+
+```{r}
+source("source/nsduh_table_format.R")
+nsduh_df <- bind_rows(
+nsduh_import(html = nsduh_html, 1, drug = "marj"),
+nsduh_import(html = nsduh_html, 4, drug = "cocaine") ,
+nsduh_import(html = nsduh_html,5, drug = "heroin")) 
 ```
 
