@@ -1,0 +1,124 @@
+---
+title: "Iteration and List Columns"
+author: "Mari Sanders"
+date: "2024-10-24"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(rvest)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Lists 
+
+```{r}
+l <- list(
+  vec_numeric = 1:4, 
+  unif_sample = runif(100), 
+  mat = matrix(1:8, nrow = 2, ncol = 4, byrow = TRUE), 
+  summary = summary(rnorm(1000))
+)
+
+l$mat
+
+l[["mat"]][1,3]
+
+l[[4]]
+```
+
+
+```{r}
+list_norm <- 
+  list(
+    a = rnorm(20, 0, 5), 
+    b = rnorm(20, 4, 5),
+    c = rnorm(20, 0, 10), 
+    d = rnorm(20, 4, 10)
+  )
+
+list_norm[["b"]]
+```
+
+```{r}
+mean_and_sd <- function(x) {
+  
+  mean_x = mean(x)
+  sd_x = sd(x)
+  
+  output_df = 
+    tibble(
+      mean = mean_x,
+      sd = sd_x
+    )
+  
+  return(output_df)
+}
+```
+
+Take mean and sd of all samples
+```{r}
+mean_and_sd(list_norm[["a"]])
+mean_and_sd(list_norm[["b"]])
+mean_and_sd(list_norm[["c"]])
+mean_and_sd(list_norm[["d"]])
+
+```
+
+## For Loop
+
+Create an output list and run a for loop
+
+```{r}
+output <- vector("list", length = 4)
+
+for (i in 1:4) {
+  
+  output[[i]] = mean_and_sd(list_norm[[i]])
+  
+}
+
+output
+```
+
+
+## NSDUH
+
+```{r}
+url = "http://samhda.s3-us-gov-west-1.amazonaws.com/s3fs-public/field-uploads/2k15StateFiles/NSDUHsaeShortTermCHG2015.htm"
+
+nsduh_html <- read_html(url)
+
+marj_df <-
+  nsduh_html %>% 
+  html_table() %>% 
+  nth(1) %>%  
+  slice(-1) %>% 
+  mutate(drug = "marj")
+
+cocaine_df <-
+  nsduh_html %>% 
+  html_table() %>% 
+  nth(4) %>%  
+  slice(-1) %>% 
+  mutate(drug = "cocaine")
+
+heroin_df <- 
+  nsduh_html %>% 
+  html_table() %>% 
+  nth(5) %>%  
+  slice(-1) %>% 
+  mutate(drug = "heroin")
+```
+
+Writing a function to get each table. 
+
+```{r}
+source("source/nsduh_table_format.R")
+nsduh_df <- bind_rows(
+nsduh_import(html = nsduh_html, 1, drug = "marj"),
+nsduh_import(html = nsduh_html, 4, drug = "cocaine") ,
+nsduh_import(html = nsduh_html,5, drug = "heroin")) 
+```
+
