@@ -28,8 +28,8 @@ l[["mat"]][1,3]
 l[[4]]
 ```
 
-    ##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-    ## -3.477019 -0.767623 -0.008707 -0.040957  0.698007  3.200625
+    ##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+    ## -3.00826 -0.60458  0.05352  0.05933  0.73128  3.95563
 
 ``` r
 list_norm <- 
@@ -43,9 +43,10 @@ list_norm <-
 list_norm[["b"]]
 ```
 
-    ##  [1]  3.558547  1.813214  4.050765  0.581115  7.208275  4.473233  5.441313
-    ##  [8] 12.495729  3.914389  7.919061  4.422730  3.974329  9.726330  2.380879
-    ## [15]  0.327593  2.827610  8.922055  9.946186 16.950684  5.886520
+    ##  [1]  8.17872522  0.65874317 -2.96706448  1.54740721  3.71123602  4.80831779
+    ##  [7] -0.04318353  1.10516154  4.48268833 -7.28421063  9.81377036  5.22653412
+    ## [13] -7.21686418  3.41259292  8.04213733  1.46674418  5.17211981  3.82269401
+    ## [19]  3.77447780  1.23614047
 
 ``` r
 mean_and_sd <- function(x) {
@@ -70,9 +71,9 @@ mean_and_sd(list_norm[["a"]])
 ```
 
     ## # A tibble: 1 × 2
-    ##      mean    sd
-    ##     <dbl> <dbl>
-    ## 1 -0.0360  4.53
+    ##     mean    sd
+    ##    <dbl> <dbl>
+    ## 1 -0.665  5.55
 
 ``` r
 mean_and_sd(list_norm[["b"]])
@@ -81,16 +82,16 @@ mean_and_sd(list_norm[["b"]])
     ## # A tibble: 1 × 2
     ##    mean    sd
     ##   <dbl> <dbl>
-    ## 1  5.84  4.17
+    ## 1  2.45  4.48
 
 ``` r
 mean_and_sd(list_norm[["c"]])
 ```
 
     ## # A tibble: 1 × 2
-    ##     mean    sd
-    ##    <dbl> <dbl>
-    ## 1 -0.652  7.92
+    ##    mean    sd
+    ##   <dbl> <dbl>
+    ## 1 -1.55  8.98
 
 ``` r
 mean_and_sd(list_norm[["d"]])
@@ -99,7 +100,7 @@ mean_and_sd(list_norm[["d"]])
     ## # A tibble: 1 × 2
     ##    mean    sd
     ##   <dbl> <dbl>
-    ## 1  3.18  10.2
+    ## 1  5.57  9.72
 
 ## For Loop
 
@@ -119,27 +120,27 @@ output
 
     ## [[1]]
     ## # A tibble: 1 × 2
-    ##      mean    sd
-    ##     <dbl> <dbl>
-    ## 1 -0.0360  4.53
+    ##     mean    sd
+    ##    <dbl> <dbl>
+    ## 1 -0.665  5.55
     ## 
     ## [[2]]
     ## # A tibble: 1 × 2
     ##    mean    sd
     ##   <dbl> <dbl>
-    ## 1  5.84  4.17
+    ## 1  2.45  4.48
     ## 
     ## [[3]]
     ## # A tibble: 1 × 2
-    ##     mean    sd
-    ##    <dbl> <dbl>
-    ## 1 -0.652  7.92
+    ##    mean    sd
+    ##   <dbl> <dbl>
+    ## 1 -1.55  8.98
     ## 
     ## [[4]]
     ## # A tibble: 1 × 2
     ##    mean    sd
     ##   <dbl> <dbl>
-    ## 1  3.18  10.2
+    ## 1  5.57  9.72
 
 # Use Map
 
@@ -194,10 +195,10 @@ listcol_df %>%
 listcol_df[["samp"]][["a"]]
 ```
 
-    ##  [1]  0.9850794 -2.4949433  5.9225695  2.4818917 -0.1089657 11.3495534
-    ##  [7]  0.6097228 -5.2701332  0.5091910 -1.2537537 -6.1421116 -3.2700661
-    ## [13] -2.4950441  0.4422835  3.2453476 -6.4484612 -4.5303792  5.6745243
-    ## [19]  3.4911091 -3.4171870
+    ##  [1]   0.09604256   7.39631669 -14.43569883  -1.97991353  -1.20381965
+    ##  [6]  -4.59471516   2.46503544   0.94703597   5.69482791   5.80483219
+    ## [11]  -6.42050768   1.63485572  -4.19744345   9.44578336  -3.20803665
+    ## [16]  -2.81438966  -1.81330468   2.00704664  -0.76134750  -7.37214103
 
 Compute Mean and Standard Deviation
 
@@ -206,9 +207,9 @@ mean_and_sd(listcol_df[["samp"]][["a"]])
 ```
 
     ## # A tibble: 1 × 2
-    ##      mean    sd
-    ##     <dbl> <dbl>
-    ## 1 -0.0360  4.53
+    ##     mean    sd
+    ##    <dbl> <dbl>
+    ## 1 -0.665  5.55
 
 ``` r
 mean_and_sd(listcol_df[["samp"]][["b"]])
@@ -217,7 +218,7 @@ mean_and_sd(listcol_df[["samp"]][["b"]])
     ## # A tibble: 1 × 2
     ##    mean    sd
     ##   <dbl> <dbl>
-    ## 1  5.84  4.17
+    ## 1  2.45  4.48
 
 ``` r
 map(listcol_df[["samp"]], mean_and_sd)
@@ -225,27 +226,27 @@ map(listcol_df[["samp"]], mean_and_sd)
 
     ## $a
     ## # A tibble: 1 × 2
-    ##      mean    sd
-    ##     <dbl> <dbl>
-    ## 1 -0.0360  4.53
+    ##     mean    sd
+    ##    <dbl> <dbl>
+    ## 1 -0.665  5.55
     ## 
     ## $b
     ## # A tibble: 1 × 2
     ##    mean    sd
     ##   <dbl> <dbl>
-    ## 1  5.84  4.17
+    ## 1  2.45  4.48
     ## 
     ## $c
     ## # A tibble: 1 × 2
-    ##     mean    sd
-    ##    <dbl> <dbl>
-    ## 1 -0.652  7.92
+    ##    mean    sd
+    ##   <dbl> <dbl>
+    ## 1 -1.55  8.98
     ## 
     ## $d
     ## # A tibble: 1 × 2
     ##    mean    sd
     ##   <dbl> <dbl>
-    ## 1  3.18  10.2
+    ## 1  5.57  9.72
 
 Add a list column
 
@@ -258,10 +259,10 @@ listcol_df %>%
     ## # A tibble: 4 × 4
     ##   name  samp         output             iqr
     ##   <chr> <named list> <named list>     <dbl>
-    ## 1 a     <dbl [20]>   <tibble [1 × 2]>  5.98
-    ## 2 b     <dbl [20]>   <tibble [1 × 2]>  4.79
-    ## 3 c     <dbl [20]>   <tibble [1 × 2]> 11.3 
-    ## 4 d     <dbl [20]>   <tibble [1 × 2]> 11.9
+    ## 1 a     <dbl [20]>   <tibble [1 × 2]>  5.58
+    ## 2 b     <dbl [20]>   <tibble [1 × 2]>  3.91
+    ## 3 c     <dbl [20]>   <tibble [1 × 2]> 14.5 
+    ## 4 d     <dbl [20]>   <tibble [1 × 2]> 16.4
 
 ``` r
 listcol_df %>% 
@@ -272,12 +273,12 @@ listcol_df %>%
 ```
 
     ## # A tibble: 4 × 4
-    ##   name     mean    sd   iqr
-    ##   <chr>   <dbl> <dbl> <dbl>
-    ## 1 a     -0.0360  4.53  5.98
-    ## 2 b      5.84    4.17  4.79
-    ## 3 c     -0.652   7.92 11.3 
-    ## 4 d      3.18   10.2  11.9
+    ##   name    mean    sd   iqr
+    ##   <chr>  <dbl> <dbl> <dbl>
+    ## 1 a     -0.665  5.55  5.58
+    ## 2 b      2.45   4.48  3.91
+    ## 3 c     -1.55   8.98 14.5 
+    ## 4 d      5.57   9.72 16.4
 
 ## NSDUH
 
@@ -496,6 +497,43 @@ lm(tmax ~ tmin, data = weather_nest[["data"]][[3]])
     ## Coefficients:
     ## (Intercept)         tmin  
     ##       7.532        1.137
+
+Function that fits the regression
+
+``` r
+weather_lm <- function(df) {
+  
+  lm(tmax ~ tmin, data = df)
+}
+```
+
+Run models using the function
+
+``` r
+weather_lm(weather_nest[["data"]][[1]])
+```
+
+    ## 
+    ## Call:
+    ## lm(formula = tmax ~ tmin, data = df)
+    ## 
+    ## Coefficients:
+    ## (Intercept)         tmin  
+    ##       7.514        1.034
+
+``` r
+weather_nest %>% 
+  mutate(model_fit = map(data, weather_lm))
+```
+
+    ## # A tibble: 3 × 4
+    ##   name           id          data               model_fit
+    ##   <chr>          <chr>       <list>             <list>   
+    ## 1 CentralPark_NY USW00094728 <tibble [730 × 4]> <lm>     
+    ## 2 Molokai_HI     USW00022534 <tibble [730 × 4]> <lm>     
+    ## 3 Waterhole_WA   USS0023B17S <tibble [730 × 4]> <lm>
+
+This does the same thing as above, but above is easier to understand.
 
 ``` r
 weather_nest %>% 
